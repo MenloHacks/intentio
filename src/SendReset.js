@@ -208,7 +208,10 @@ class ResetPasswordFinished extends Component {
                             <h1>Password Reset Complete</h1>
                             Your password was successfully reset.
                             <br/><br/>
-                            <Button raised color={"primary"} onClick={() => {window.location.href = "http://applybeta.menlohacks.com"}}>Return to login</Button>
+                            <Button raised color={"primary"}
+                                    onClick={() => {window.location.href= "https://apply.menlohacks.com"}}>
+                                Return to login
+                            </Button>
                         </Grid>
                     </Grid>
                 </div>
@@ -227,7 +230,8 @@ class ResetPasswordFailed extends Component {
                     <Grid container spacing={0} justify={"center"}>
                         <Grid item md={3} sm={10} xs={10}>
                             <h1>Password Reset Failed</h1>
-                            Your password was not successfully reset. Most likely, your reset token expired.
+                            Your password was not successfully reset. Your reset token may have expired, or you may
+                            have already used it.
                             <br/><br/>
                             <Button raised color={"primary"} onClick={() => this.props.setUserState("sendReset")}>Resend password reset email</Button>
                         </Grid>
