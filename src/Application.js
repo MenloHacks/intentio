@@ -141,6 +141,15 @@ class Application extends Component {
             }
         })
     };
+
+    toPrevPageWait = () => {
+        if (!this.state.out) {
+            this.props.setUserState("profile");
+        } else {
+            setTimeout(this.toPrevPageWait, 50);
+        }
+    };
+
     render() {
         const { classes } = this.props;
         let is_non_menlo = this.props.userState !== "menlo_application" && this.props.userState !== "bgc_application";
@@ -163,8 +172,8 @@ class Application extends Component {
                                 </p> :
                                 is_non_menlo && !this.props.CONSTANTS.loading ?
                                     <p style={{marginLeft: "8px", marginBottom: "0px"}}>
-                                        Applications will close
-                                        on {new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).toDateString()}.
+                                        Applications will close the midnight
+                                        before {new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).toDateString()}.
                                         Please fill out all required information before then.
                                     </p> :
                                     null
@@ -172,7 +181,7 @@ class Application extends Component {
                         <form
                             ref={"form"}
                             className={classes.container}
-                            onSubmit={() => {}}
+                            onSubmit={this.fakeSubmit}
                         >
                             {
                                 is_non_menlo ?
@@ -257,7 +266,7 @@ class Application extends Component {
                             <FlexBoxOKNewLine/>
                             <Button raised color={"primary"}
                                     style={{marginLeft: '8px', marginTop: "16px"}}
-                                    onClick={() => {this.props.setUserState("profile")}}>
+                                    onClick={this.toPrevPageWait}>
                                Previous
                             </Button>
                             <span style={{marginTop: "24px", "marginLeft": "32px"}}>Autosaved</span>
