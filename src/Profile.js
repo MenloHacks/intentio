@@ -237,11 +237,7 @@ class Profile extends Component {
                     });
                 }
             }, (error) => {
-                console.log("AUTOSAVE ERROR");
-                console.log(error);
-                this.setState({
-                    delta: {...old_delta, ...this.state.delta}
-                });
+                window.location.reload(true);
             });
         });
     };
@@ -488,6 +484,7 @@ class Profile extends Component {
                                     </MenuItem>
                                 </Select>
                             </FormControl>
+                            <FlexBoxOKNewLine/>
                             <FormControl error={this.state.mlh_error}>
                                 <FormControlLabel
                                     style={{marginLeft: '-8px', marginBottom: '8px'}}
@@ -501,15 +498,8 @@ class Profile extends Component {
                                     label={
                                         <span>
                                             I agree to the MLH <a href={"https://static.mlh.io/docs/mlh-code-of-conduct.pdf"}
-                                                                       target={"_BLANK"} rel={"noopener"}>Code of Conduct</a> and
-                                        the terms of both
-                                        the <a
-                                            href={"https://github.com/MLH/mlh-policies/tree/master/prize-terms-and-conditions"}
-                                            target={"_BLANK"} rel={"noopener"}>MLH Contest Terms and Conditions</a> and
-                                        the <a href={"https://mlh.io/privacy"} target={"_BLANK"} rel={"noopener"}>MLH Privacy Policy</a>.
-                                        Please note that you may receive pre and post-event informational e-mails
-                                        and occasional messages about hackathons from MLH as per the MLH Privacy
-                                        Policy. *</span>}
+                                                                       target={"_BLANK"} rel={"noopener"}>Code of Conduct</a>. *
+                                        </span>}
                                 />
                                 <FormHelperText style={{marginTop: '-8px', 'marginLeft': '8px', marginBottom: '16px',
                                     display: this.state.mlh_error ? 'block' : 'none'}}>

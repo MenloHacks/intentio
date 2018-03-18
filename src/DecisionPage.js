@@ -160,8 +160,8 @@ class DecisionPage extends Component {
                                                     :
                                                     this.state.coming_maybe ?
                                                         <p>
-                                                            Ok. Visit this page again soon to let us know if you can come.
-                                                            We hope to see you at MenloHacks!
+                                                            Ok. We hope to see you at MenloHacks!
+                                                            <br/>
                                                         </p>
                                                         :
                                                         this.state.coming_no ?

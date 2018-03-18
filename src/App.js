@@ -107,7 +107,8 @@ const getApplication = gql`
             last_summer,
             anything_else,
             liability_form,
-            photo_form
+            photo_form,
+            submitted
         }
     }
 `;
@@ -128,10 +129,10 @@ const updateProfile = gql`
 const updateApplication = gql`
     mutation updateApplication($cool_project: String, $last_summer: String, $anything_else: String, 
                                $liability_form: String, $photo_form: String, $coming_yes: Boolean, 
-                               $coming_maybe: Boolean, $coming_no: Boolean, $token: String!) {
+                               $coming_maybe: Boolean, $coming_no: Boolean, $submitted: Boolean, $token: String!) {
         updateApplication(cool_project: $cool_project, last_summer: $last_summer, anything_else: $anything_else,
                           liability_form: $liability_form, photo_form: $photo_form, coming_yes: $coming_yes, 
-                          coming_maybe: $coming_maybe, coming_no: $coming_no, token: $token)
+                          coming_maybe: $coming_maybe, coming_no: $coming_no, submitted: $submitted, token: $token)
     }
 `;
 
@@ -232,7 +233,13 @@ class UserManager extends Component {
                     "token": url.split("reset_password=")[1],
                     "userState": "resetPassword",
                 };
-            } else {
+            } else if(url.includes("register")) {
+                this.state = {
+                    "token": null,
+                    "userState": "register",
+                };
+            }
+            else {
                 this.state = {
                     "token": null,
                     "userState": "login",
@@ -258,6 +265,7 @@ class UserManager extends Component {
     registerWithPurge = (email, password, error, success) => {
         this.props.createUser(email, password).then((data) => {
             this.setToken(data.data.createUser);
+            window.location = window.location.pathname;
         }, (e) => {
             error(e);
         });
@@ -265,6 +273,7 @@ class UserManager extends Component {
     loginWithPurge = (email, password, error, success) =>  {
         this.props.login(email, password).then((data) => {
             this.setToken(data.data.login);
+            window.location = window.location.pathname;
         }, (e) => {
             error(e);
         });

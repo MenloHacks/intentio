@@ -34,7 +34,8 @@ class Application extends Component {
             'showAlert': false,
             'errorText': '',
             'delta': {'token': this.props.token},
-            'out': false
+            'out': false,
+            'submitted': false,
         };
         this.initialize_state();
     };
@@ -51,7 +52,8 @@ class Application extends Component {
                 'last_summer': application.last_summer ? application.last_summer : '',
                 'anything_else': application.anything_else ? application.anything_else : '',
                 'liability_form': application.liability_form ? application.liability_form : '',
-                'photo_form': application.photo_form ? application.photo_form : ''
+                'photo_form': application.photo_form ? application.photo_form : '',
+                'submitted': application.submitted
             });
         }
     };
@@ -101,24 +103,9 @@ class Application extends Component {
                     });
                 }
             }, (error) => {
-                console.log("AUTOSAVE ERROR");
-                console.log(error);
-                this.setState({
-                    delta: {...old_delta, ...this.state.delta}
-                });
+                console.log("error: " + error);
             });
         });
-    };
-
-    fakeSubmit = (e) => {
-        if (e) {
-            e.preventDefault();
-        }
-        if (!this.state.out) {
-            window.location.reload();
-        } else {
-            setTimeout(this.fakeSubmit, 50);
-        }
     };
 
     handleChange = (e) => {
@@ -171,17 +158,18 @@ class Application extends Component {
                                     You can still upload your forms if you haven't already.
                                 </p> :
                                 is_non_menlo && !this.props.CONSTANTS.loading ?
-                                    <p style={{marginLeft: "8px", marginBottom: "0px"}}>
-                                        Applications will close the midnight
-                                        before {new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).toDateString()}.
-                                        Please fill out all required information before then.
-                                    </p> :
-                                    null
+                                    <div>
+                                        <p style={{marginLeft: "8px", marginBottom: "0px"}}>
+                                            Applications will close the midnight
+                                            before {new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).toDateString()}.
+                                            Please fill out all required information before then.
+                                        </p>
+                                    </div>
+                                    : null
                         }
                         <form
                             ref={"form"}
                             className={classes.container}
-                            onSubmit={this.fakeSubmit}
                         >
                             {
                                 is_non_menlo ?
@@ -264,16 +252,30 @@ class Application extends Component {
                                     </span>
                             }
                             <FlexBoxOKNewLine/>
+                            {
+                                this.state.submitted ?
+                                    <p style={{color: "#289b28", marginLeft: "8px", marginBottom: "0px"}}>
+                                        Everything has been submitted. {is_non_menlo ?
+                                        "You can still edit your application until the deadline." :
+                                        "You can still edit your information."}
+                                    </p> :
+                                    null
+                            }
+                            <FlexBoxOKNewLine/>
                             <Button raised color={"primary"}
                                     style={{marginLeft: '8px', marginTop: "16px"}}
                                     onClick={this.toPrevPageWait}>
                                Previous
                             </Button>
-                            <span style={{marginTop: "24px", "marginLeft": "32px"}}>Autosaved</span>
-                            <Button raised color={"primary"} type={"submit"} style={{marginLeft: 'auto', marginTop: "16px"}}>
-                                Save
+                            <span style={{marginTop: "26px", "marginLeft": "auto"}}>Autosaved</span>
+                            <Button raised color={"primary"}
+                                    style={{marginLeft: '16px', marginTop: "16px"}} onClick={
+                                        () => this.handleChange({target: {name: "submitted", value: true}})
+                            }>
+                                Submit
                             </Button>
                         </form>
+                        <br/><br/>
                     </Grid>
                     <SweetAlert
                         show={this.state.showAlert}

@@ -104,6 +104,11 @@ class RegisterOrLogin extends Component {
                     <Grid container spacing={0} justify={"center"}>
                         <Grid item md={3} sm={10} xs={10}>
                             <h1>{this.props.title}</h1>
+                            <p>
+                                {this.props.title === 'Log in' ? "You will need to create an account, even if you had one last year.":
+                                    null
+                                }
+                            </p>
                             <ValidatorForm
                                 ref={"form"}
                                 onSubmit={this.screen_edu}
