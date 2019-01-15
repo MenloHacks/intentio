@@ -39,6 +39,7 @@ class Profile extends Component {
             'school': '',
             'grade': '',
             'phone_number': '',
+            'race_ethnicity': '',
             'gender': '',
             'dietary_restrictions': '',
             'shirt_size': '',
@@ -53,6 +54,7 @@ class Profile extends Component {
             'first_name_error': false,
             'last_name_error': false,
             'gender_error': false,
+            'race_ethnicity_error': false,
             'grade_error': false,
             'grade_error_message': '',
             'school_error': false,
@@ -78,6 +80,7 @@ class Profile extends Component {
             'grade': profile.grade ? profile.grade : '',
             'phone_number': profile.phone_number ? profile.phone_number : '',
             'gender': profile.gender ? profile.gender : '',
+            'race_ethnicity': profile.race_ethnicity ? profile.race_ethnicity : '',
             'dietary_restrictions': profile.dietary_restrictions ? profile.dietary_restrictions : '',
             'shirt_size': profile.shirt_size ? profile.shirt_size : '',
             'github_link': profile.github_link ? profile.github_link : '',
@@ -191,6 +194,14 @@ class Profile extends Component {
             if (error) {
                 return;
             }
+        } else if (name === "race_ethnicity") {
+            let error = this.isEmpty(value);
+            this.setState({
+                'race_ethnicity_error': error
+            });
+            if (error) {
+                return;
+            }
         } else if (name === "shirt_size") {
             let error = this.isEmpty(value);
             this.setState({
@@ -270,6 +281,7 @@ class Profile extends Component {
         const grade_error = this.isGradeError(this.state.grade);
         const phone_number_error = this.isPhoneNumberError(this.state.phone_number);
         const gender_error = this.isEmpty(this.state.gender);
+        const race_ethnicity_error = this.isEmpty(this.state.race_ethnicity);
         const shirt_size_error = this.isEmpty(this.state.shirt_size);
         const mlh_error = !this.state.mlh_agreement;
         this.setState({
@@ -279,11 +291,12 @@ class Profile extends Component {
             'grade_error': grade_error,
             'phone_number_error': phone_number_error,
             'gender_error': gender_error,
+            'race_ethnicity_error': race_ethnicity_error,
             'shirt_size_error': shirt_size_error,
             'mlh_error': mlh_error
         });
         if (!(first_name_error || last_name_error || school_error || grade_error ||
-                phone_number_error || gender_error || shirt_size_error || mlh_error)) {
+                phone_number_error || gender_error || race_ethnicity_error || shirt_size_error || mlh_error)) {
             this.toNextPageWait();
         }
     };
@@ -305,6 +318,18 @@ class Profile extends Component {
             'dietary_restrictions': value
         });
         this.validateAndSubmit('dietary_restrictions', value);
+    };
+    setGenderValue = (value) => {
+        this.setState({
+            'gender': value
+        });
+        this.validateAndSubmit('gender', value);
+    };
+    setRaceEthnicityValue = (value) => {
+        this.setState({
+            'race_ethnicity': value
+        });
+        this.validateAndSubmit('race_ethnicity', value);
     };
     render() {
         const { classes } = this.props;
@@ -377,30 +402,6 @@ class Profile extends Component {
                                 classes={classes}
                             />
                             <FormControl className={classes.textField} margin={"normal"} style={{marginLeft: 0,
-                                marginRight: 16}}
-                                         error={this.state.gender_error}>
-                                <InputLabel htmlFor="gender"  className={classes.textField}>Gender *</InputLabel>
-                                <Select
-                                    value={this.state.gender}
-                                    onChange={this.handleChange}
-                                    name={'gender'}
-                                    input={<Input id={'gender'} className={classes.textField}/>}
-                                    className={classes.textField}
-                                >
-                                    {
-                                        this.props.CONSTANTS.loading ? null :
-                                            this.props.CONSTANTS.CONSTANTS.GENDER_OPTIONS.map((object, i) => {
-                                                return <MenuItem value={object} key={object}>{object}</MenuItem>
-                                            })
-                                    }
-                                </Select>
-                                <FormHelperText
-                                    className={classes.textField}
-                                    style={this.state.gender_error ? {} : {'display': 'none'}}>
-                                    Please select your gender.
-                                </FormHelperText>
-                            </FormControl>
-                            <FormControl className={classes.textField} margin={"normal"} style={{marginLeft: 0,
                                 marginRight: '16px'}}
                                          error={this.state.shirt_size_error}>
                                 <InputLabel htmlFor="shirt_size"  className={classes.textField}>Shirt Size *</InputLabel>
@@ -433,6 +434,7 @@ class Profile extends Component {
                                 label={"Dietary Restriction"}
                                 errorMessage={''}
                                 fullWidth={false}
+                                allow_zerosuggest={true}
                             />
                             <TextField
                                 label={"Link to Github Profile"}
@@ -485,6 +487,36 @@ class Profile extends Component {
                                 </Select>
                             </FormControl>
                             <FlexBoxOKNewLine/>
+                            <h4 className={classes.textField} style={{width: "100%"}}>Demographic Questions</h4>
+                            <FlexBoxOKNewLine/>
+                            <i className={classes.textField} style={{width: "100%"}}>The below questions are purely for informational
+                            purposes and will not be used in evaluating an application.</i>
+                            <FlexBoxOKNewLine/>
+                            <IntegrationAutosuggest
+                                OPTIONS={this.props.CONSTANTS.loading ? []: this.props.CONSTANTS.CONSTANTS.GENDER_OPTIONS}
+                                margin={"normal"}
+                                error={this.state.gender_error}
+                                name={"gender"}
+                                value={this.state.gender}
+                                setValue={this.setGenderValue}
+                                label={"Gender *"}
+                                errorMessage={"Please state your gender."}
+                                fullWidth={false}
+                                allow_zerosuggest={true}
+                            />
+                            <IntegrationAutosuggest
+                                OPTIONS={this.props.CONSTANTS.loading ? []: this.props.CONSTANTS.CONSTANTS.RACE_ETHNICITY_OPTIONS}
+                                margin={"normal"}
+                                error={this.state.race_ethnicity_error}
+                                name={"race_ethnicity"}
+                                value={this.state.race_ethnicity}
+                                setValue={this.setRaceEthnicityValue}
+                                label={"Race/Ethnicity *"}
+                                errorMessage={"Please state your race/ethnicity."}
+                                fullWidth={true}
+                                allow_zerosuggest={true}
+                            />
+                            <FlexBoxOKNewLine/>
                             <FormControl error={this.state.mlh_error}>
                                 <FormControlLabel
                                     style={{marginLeft: '-8px', marginBottom: '8px'}}
@@ -510,7 +542,6 @@ class Profile extends Component {
                             <Button raised color={"primary"} type={"submit"} style={{marginLeft: '0'}}>
                                 Next
                             </Button>
-
                         </form>
                         <br/><br/>
                     </Grid>

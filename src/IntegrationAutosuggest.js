@@ -176,6 +176,9 @@ class IntegrationAutosuggest extends React.Component {
         const inputValue = value.trim().toLowerCase();
         const inputLength = inputValue.length;
         let count = 0;
+        if (this.props.allow_zerosuggest && inputLength === 0) {
+            return this.props.OPTIONS;
+        }
 
         return inputLength === 0
             ? []
@@ -209,6 +212,7 @@ class IntegrationAutosuggest extends React.Component {
                 renderSuggestionsContainer={this.renderSuggestionsContainer}
                 getSuggestionValue={this.getSuggestionValue}
                 renderSuggestion={this.renderSuggestion}
+                shouldRenderSuggestions={(value) => true}
                 inputProps={{
                     classes,
                     value: this.props.value,
@@ -217,7 +221,8 @@ class IntegrationAutosuggest extends React.Component {
                     label: this.props.label,
                     error_message: this.props.errorMessage,
                     fullWidth: this.props.fullWidth,
-                    disabled: this.props.disabled
+                    disabled: this.props.disabled,
+                    autoComplete: "nope"
                 }}
             />
         );

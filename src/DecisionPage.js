@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
-import filestack from 'filestack-js';
 const apikey = 'AKOHZFGyDQgekYH95idduz';
-const client = filestack.init(apikey);
+const client = require("filestack-js").init(apikey);
 
 class DecisionPage extends Component {
     constructor(props) {
@@ -61,7 +60,7 @@ class DecisionPage extends Component {
     };
 
     uploadForm = (name) => {
-        client.pick({fromSources: ["local_file_system", "dropbox"], maxFiles: 1}).then((res) => {
+        client.picker({fromSources: ["local_file_system", "dropbox"], maxFiles: 1}).then((res) => {
             if (res.filesUploaded.length > 0) {
                 let updated = {};
                 updated[name] = res.filesUploaded[0].url;
@@ -142,8 +141,8 @@ class DecisionPage extends Component {
                                                         </p>
                                                         <br/>
                                                         <Button raised type={"secondary"}
-                                                            onClick={() => {this.uploadForm("photo_form")}}>
-                                                        Upload
+                                                                onClick={() => {this.uploadForm("photo_form")}}>
+                                                            Upload
                                                         </Button>
                                                         <br/>
                                                         {
@@ -177,7 +176,7 @@ class DecisionPage extends Component {
                                             <div>
                                                 <h1>You've been Waitlisted</h1>
                                                 <p>
-                                                Unfortunately, due to an overwhelming number of applications, you were not
+                                                    Unfortunately, due to an overwhelming number of applications, you were not
                                                     admitted in the first round of acceptances, so you have been placed on
                                                     a waiting list.  We will be accepting students on the waitlist on a
                                                     rolling basis, so make sure to stay tuned for any updates.

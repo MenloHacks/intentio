@@ -5,9 +5,8 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import SweetAlert from 'sweetalert2-react';
 import {FlexBoxOKNewLine} from "./MiscForms";
-import filestack from 'filestack-js';
 const apikey = 'AKOHZFGyDQgekYH95idduz';
-const client = filestack.init(apikey);
+const client = require("filestack-js").init(apikey);
 
 
 const styles = theme => ({
@@ -118,15 +117,15 @@ class Application extends Component {
     };
 
     uploadForm = (name) => {
-        client.pick({fromSources: ["local_file_system", "dropbox"], maxFiles: 1}).then((res) => {
-            if (res.filesUploaded.length > 0) {
-                let updated = {};
-                let url = res.filesUploaded[0].url;
-                updated[name] = url;
-                this.setState(updated);
-                this.handleChange({target: {name: name, value: url}});
-            }
-        })
+        client.picker({fromSources: ["local_file_system", "dropbox"], maxFiles: 1, onUploadDone: res => {
+                if (res.filesUploaded.length > 0) {
+                    let updated = {};
+                    let url = res.filesUploaded[0].url;
+                    updated[name] = url;
+                    this.setState(updated);
+                    this.handleChange({target: {name: name, value: url}});
+                }
+            }}).open();
     };
 
     toPrevPageWait = () => {
