@@ -49,6 +49,7 @@ class Profile extends Component {
             'personal_website': '',
             'is_bgc': false,
             'mlh_agreement': false,
+            'mlh_data_agreement': false,
             'showAlert': false,
             'errorText': '',
             'first_name_error': false,
@@ -61,6 +62,7 @@ class Profile extends Component {
             'dietary_restrictions_error': false,
             'shirt_size_error': false,
             'mlh_error': false,
+            'mlh_data_error': false,
             'delta': {'token': this.props.token},
             'out': false
         };
@@ -89,6 +91,7 @@ class Profile extends Component {
             'personal_website': profile.personal_website ? profile.personal_website : '',
             'is_bgc': !!profile.is_bgc,
             'mlh_agreement': !!profile.mlh_agreement,
+            'mlh_data_agreement': !!profile.mlh_data_agreement
         });
     };
     componentWillUnmount () {
@@ -218,6 +221,14 @@ class Profile extends Component {
                 return;
             }
         }
+        else if (name === "mlh_data_agreement") {
+            this.setState({
+                'mlh_data_error': !value
+            });
+            if (!value) {
+                return;
+            }
+        }
         let new_delta = {...{}, ...this.state.delta};
         new_delta[name] = value;
         this.setState({
@@ -266,6 +277,11 @@ class Profile extends Component {
             this.setState({
                 'mlh_agreement': value
             });
+        } else if (name === 'mlh_data_agreement') {
+            value = !this.state.mlh_data_agreement;
+            this.setState({
+                'mlh_data_agreement': value
+            });
         } else {
             this.setState({
                 [e.target.name]: e.target.value
@@ -284,6 +300,7 @@ class Profile extends Component {
         const race_ethnicity_error = this.isEmpty(this.state.race_ethnicity);
         const shirt_size_error = this.isEmpty(this.state.shirt_size);
         const mlh_error = !this.state.mlh_agreement;
+        const mlh_data_error = !this.state.mlh_data_agreement;
         this.setState({
             'first_name_error': first_name_error,
             'last_name_error': last_name_error,
@@ -293,10 +310,11 @@ class Profile extends Component {
             'gender_error': gender_error,
             'race_ethnicity_error': race_ethnicity_error,
             'shirt_size_error': shirt_size_error,
-            'mlh_error': mlh_error
+            'mlh_error': mlh_error,
+            'mlh_data_error': mlh_data_error
         });
         if (!(first_name_error || last_name_error || school_error || grade_error ||
-                phone_number_error || gender_error || race_ethnicity_error || shirt_size_error || mlh_error)) {
+                phone_number_error || gender_error || race_ethnicity_error || shirt_size_error || mlh_error || mlh_data_error)) {
             this.toNextPageWait();
         }
     };
@@ -535,6 +553,31 @@ class Profile extends Component {
                                 />
                                 <FormHelperText style={{marginTop: '-8px', 'marginLeft': '8px', marginBottom: '16px',
                                     display: this.state.mlh_error ? 'block' : 'none'}}>
+                                    You must agree to the above.</FormHelperText>
+                            </FormControl>
+                            <FlexBoxOKNewLine/>
+                            <FormControl error={this.state.mlh_data_error}>
+                                <FormControlLabel
+                                    style={{marginLeft: '-8px', marginBottom: '8px'}}
+                                    control={
+                                        <Checkbox
+                                            checked={this.state.mlh_data_agreement}
+                                            onChange={this.handleChange}
+                                            name={"mlh_data_agreement"}
+                                        />
+                                    }
+                                    label={
+                                        <span>
+                                            I authorize you to share my application/registration information for event
+                                            administration, ranking, MLH administration, pre- and post-event
+                                            informational e-mails, and occasional messages about hackathons in-line with
+                                            the MLH Privacy Policy. I further I agree to the terms of both the
+                                            <a href={"https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md"} target={"_blank"}> MLH Contest Terms and Conditions</a> and
+                                             the <a href={"https://mlh.io/privacy"} target={"_blank"}>MLH Privacy Policy</a>. *
+                                        </span>}
+                                />
+                                <FormHelperText style={{marginTop: '-8px', 'marginLeft': '8px', marginBottom: '16px',
+                                    display: this.state.mlh_data_error ? 'block' : 'none'}}>
                                     You must agree to the above.</FormHelperText>
                             </FormControl>
                             <FlexBoxOKNewLine/>

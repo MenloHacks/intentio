@@ -98,7 +98,8 @@ const getProfile = gql`
             devpost_profile,
             personal_website,
             is_bgc,
-            mlh_agreement
+            mlh_agreement,
+            mlh_data_agreement
         }
     }
 `;
@@ -119,12 +120,12 @@ const updateProfile = gql`
     mutation updateProfile($first_name: String, $last_name: String, $school: String, $grade: Int, $phone_number: String,
                            $gender: String, $race_ethnicity: String, $dietary_restrictions: String, $shirt_size: String, $github_link: String, 
                            $linkedin_profile: String, $devpost_profile: String, $personal_website: String, 
-                           $is_bgc: Boolean, $mlh_agreement: Boolean, $token: String!) {
+                           $is_bgc: Boolean, $mlh_agreement: Boolean, $mlh_data_agreement: Boolean, $token: String!) {
         updateProfile(first_name: $first_name, last_name: $last_name, school: $school, grade: $grade, phone_number: $phone_number,
                       gender: $gender, race_ethnicity: $race_ethnicity, dietary_restrictions: $dietary_restrictions, shirt_size: $shirt_size,
                       github_link: $github_link, linkedin_profile: $linkedin_profile, devpost_profile: $devpost_profile,
                       personal_website: $personal_website, is_bgc: $is_bgc, mlh_agreement: $mlh_agreement, 
-                      token: $token)
+                      mlh_data_agreement: $mlh_data_agreement, token: $token)
     }
 `;
 

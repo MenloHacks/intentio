@@ -8,7 +8,6 @@
     "apollo-link": "1.0.7",
     "apollo-link-error": "1.0.3",
     "autosuggest-highlight": "3.1.1",
-    "bootstrap": "3.3.7",
     "cookies": "0.7.1",
     "error": "7.0.2",
     "filestack-js": "1.9.0",
@@ -36,7 +35,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && cp -r build docs",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
