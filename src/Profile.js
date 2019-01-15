@@ -486,24 +486,24 @@ class Profile extends Component {
                                 onChange={this.handleChange}
                                 className={classes.textField}
                             />
-                            <FormControl className={classes.textField} margin={"normal"} style={{marginLeft: 0,
-                                marginRight: '16px'}}>
-                                <InputLabel htmlFor="is_bgc" style={{ width: "350px"}} className={classes.textField}>Are you a member of the Boys and Girls Club?</InputLabel>
-                                <Select
-                                    value={this.state.is_bgc ? "yes" : "no"}
-                                    onChange={this.handleChange}
-                                    name={'is_bgc'}
-                                    className={classes.textField}
-                                    style={{ width: "350px"}}
-                                >
-                                    <MenuItem value={"yes"} key={true}>
-                                        Yes
-                                    </MenuItem>
-                                    <MenuItem value={"no"} key={false}>
-                                        No
-                                    </MenuItem>
-                                </Select>
-                            </FormControl>
+                            {/*<FormControl className={classes.textField} margin={"normal"} style={{marginLeft: 0,*/}
+                                {/*marginRight: '16px'}}>*/}
+                                {/*<InputLabel htmlFor="is_bgc" style={{ width: "350px"}} className={classes.textField}>Are you a member of the Boys and Girls Club?</InputLabel>*/}
+                                {/*<Select*/}
+                                    {/*value={this.state.is_bgc ? "yes" : "no"}*/}
+                                    {/*onChange={this.handleChange}*/}
+                                    {/*name={'is_bgc'}*/}
+                                    {/*className={classes.textField}*/}
+                                    {/*style={{ width: "350px"}}*/}
+                                {/*>*/}
+                                    {/*<MenuItem value={"yes"} key={true}>*/}
+                                        {/*Yes*/}
+                                    {/*</MenuItem>*/}
+                                    {/*<MenuItem value={"no"} key={false}>*/}
+                                        {/*No*/}
+                                    {/*</MenuItem>*/}
+                                {/*</Select>*/}
+                            {/*</FormControl>*/}
                             <FlexBoxOKNewLine/>
                             <h4 className={classes.textField} style={{width: "100%"}}>Demographic Questions</h4>
                             <FlexBoxOKNewLine/>
