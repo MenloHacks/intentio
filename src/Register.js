@@ -35,6 +35,11 @@ class RegisterOrLogin extends Component {
             [e.target.name]: e.target.value
         });
     };
+    handleEmailChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value.toLowerCase()
+        });
+    };
     componentWillMount() {
         ValidatorForm.addValidationRule('isValidEmail', (value) => {
             return Boolean(value.match(this.props.CONSTANTS.loading ? ".*" : this.props.CONSTANTS.CONSTANTS.EMAIL_REGEX));
@@ -122,7 +127,7 @@ class RegisterOrLogin extends Component {
                                         name={"email"}
                                         validators={['required', 'isValidEmail']}
                                         errorMessages={['Please enter your email.', 'Please enter a valid email.']}
-                                        onChange={this.handleChange}
+                                        onChange={this.handleEmailChange}
                                         fullWidth
                                     />
                                     <FormHelperText style={{'display': (this.state.userAlreadyExists || this.state.userDoesNotExist) ? 'block': 'none'}}>{this.state.errorMessage}</FormHelperText>
