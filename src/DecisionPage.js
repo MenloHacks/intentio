@@ -165,7 +165,7 @@ class DecisionPage extends Component {
                                                         :
                                                         this.state.coming_no ?
                                                             <p>
-                                                                Sorry to hear that. We hope to see you at MenloHacks IV!
+                                                                Sorry to hear that. We hope to see you at MenloHacks V!
                                                             </p>
                                                             :
                                                             null
@@ -197,7 +197,7 @@ class DecisionPage extends Component {
                                                         <p>
                                                             We regret to inform you that, due to an extremely competitive
                                                             applicant pool, we are not able to offer you a spot at
-                                                            MenloHacks III. We urge you to apply again next year.
+                                                            MenloHacks IV. We urge you to apply again next year.
                                                         </p>
                                                     </div> :
                                                     <div>
