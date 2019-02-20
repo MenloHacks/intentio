@@ -60,14 +60,15 @@ class DecisionPage extends Component {
     };
 
     uploadForm = (name) => {
-        client.picker({fromSources: ["local_file_system", "dropbox"], maxFiles: 1}).then((res) => {
-            if (res.filesUploaded.length > 0) {
-                let updated = {};
-                updated[name] = res.filesUploaded[0].url;
-                this.setState(updated);
-                this.props.updateApplication({...updated, token: this.props.token});
-            }
-        })
+        client.picker({fromSources: ["local_file_system", "dropbox"], maxFiles: 1, onUploadDone: res => {
+                if (res.filesUploaded.length > 0) {
+                    let updated = {};
+                    let url = res.filesUploaded[0].url;
+                    updated[name] = url;
+                    this.setState(updated);
+                    this.handleChange({target: {name: name, value: url}});
+                }
+        }}).open();
     };
 
     render() {
