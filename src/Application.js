@@ -5,7 +5,7 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import SweetAlert from 'sweetalert2-react';
 import {FlexBoxOKNewLine} from "./MiscForms";
-const apikey = 'AKOHZFGyDQgekYH95idduz';
+const apikey = 'A8V7Y1yW4Qe2ITRUYkcspz';
 const client = require("filestack-js").init(apikey);
 
 
