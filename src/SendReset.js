@@ -103,7 +103,7 @@ class SentReset extends Component {
                     <Grid container spacing={0} justify={"center"}>
                         <Grid item md={3} sm={10} xs={10}>
                             <h1>Reset Email Sent</h1>
-                            Please check your email to reset your password.
+                            Please check your email to reset your password. You may have to check your spam folder.
                             <br/><br/>
                             <Button raised color={"primary"} onClick={() => this.props.setUserState("sendReset")}>Resend Email</Button>
                         </Grid>
