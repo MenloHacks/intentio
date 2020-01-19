@@ -174,7 +174,7 @@ class Application extends Component {
                                 is_non_menlo ?
                                     <div>
                                         <TextField
-                                            label={"Describe a cool project you've done in the last six months. *"}
+                                            label={"Describe a cool project you've done in the last year. *"}
                                             value={this.state.cool_project}
                                             name={"cool_project"}
                                             onChange={this.handleChange}
