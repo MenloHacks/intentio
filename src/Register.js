@@ -24,6 +24,7 @@ class RegisterOrLogin extends Component {
             userDoesNotExist: false,
             userAlreadyExists: false,
             edu_warning: false,
+            non_menlo_warning: false,
             errorMessage: ''
 
         };
@@ -48,11 +49,23 @@ class RegisterOrLogin extends Component {
             return this.state.passwordRepeat === this.state.password;
         });
     }
-    screen_edu = (e) => {
+    screen_edu_and_non_menlo = (e) => {
         e.preventDefault();
         if (this.state.email.includes(".edu") && this.props.title === "Register") {
             this.setState({
                 edu_warning: true
+            });
+        } else {
+            this.screen_non_menlo(e);
+        }
+    };
+    screen_non_menlo = (e) => {
+        e.preventDefault();
+        if (this.props.title === "Register" && !this.state.email.includes("@menloschool.org") &&
+                !this.props.CONSTANTS.loading &&
+                new Date() > new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10))) {
+            this.setState({
+                non_menlo_warning: true
             });
         } else {
             this.registerOrLoginWithPurge();
@@ -65,6 +78,7 @@ class RegisterOrLogin extends Component {
             userAlreadyExists: false,
             passwordIncorrect: false,
             edu_warning: false,
+            non_menlo_warning: false,
         });
 
         this.props.registerOrLogin(this.state.email, this.state.password, (error) => {
@@ -109,6 +123,14 @@ class RegisterOrLogin extends Component {
                     <Grid container spacing={0} justify={"center"}>
                         <Grid item md={3} sm={10} xs={10}>
                             <h1>{this.props.title}</h1>
+                            {
+                                this.props.title === "Register" && !this.props.CONSTANTS.loading &&
+                                new Date() > new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE,
+                                    10)) ?
+                                    <p>Registration for students who do not go to Menlo has closed.</p>
+                                    :
+                                    null
+                            }
                             <p>
                                 {this.props.title === 'Log in' ? "You will need to create an account, even if you had one last year.":
                                     null
@@ -116,7 +138,7 @@ class RegisterOrLogin extends Component {
                             </p>
                             <ValidatorForm
                                 ref={"form"}
-                                onSubmit={this.screen_edu}
+                                onSubmit={this.screen_edu_and_non_menlo}
                                 instantValidate={false}
                             >
                                 <FormControl error={this.state.userAlreadyExists || this.state.userDoesNotExist} style={{width: "100%"}}>
@@ -182,6 +204,13 @@ class RegisterOrLogin extends Component {
                         title={"MenloHacks is a High School Event"}
                         text={"We noticed you are using a .edu email address. Only high school students can attend " +
                         "MenloHacks. Are you sure you want to continue?"}
+                        showCancelButton
+                        onConfirm={this.registerOrLoginWithPurge}
+                    />
+                    <SweetAlert
+                        show={this.state.non_menlo_warning}
+                        title={"Applications are closed for non-Menlo students."}
+                        text={"You must have a menloschool.org email address to make a new account."}
                         showCancelButton
                         onConfirm={this.registerOrLoginWithPurge}
                     />

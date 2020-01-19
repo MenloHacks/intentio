@@ -357,10 +357,10 @@ class Profile extends Component {
                     <Grid item md={10} sm={10} xs={10}>
                         <h1 className={classes.textField}>Profile</h1>
                         {
-                            this.props.applicationsClosed ?
+                            this.props.applicationsClosed?
                                 <p style={{marginLeft: "8px", marginBottom: "0px"}}>
-                                    The application deadline has passed, and you will not be able to edit some fields of
-                                    your profile.
+                                    The application deadline has passed for students who don't go to Menlo, so you
+                                    will not be able to edit some fields of your profile.
                                     If any of the disabled fields are incorrect, please
                                     email <a href="mailto: hello@menlohacks.com">hello@menlohacks.com</a>.
                                 </p> :

@@ -51,6 +51,7 @@ const GET_CONSTANTS = gql`
         NON_MENLO_FORM_URL,
         PHOTO_FORM_URL,
         APPLICATIONS_CLOSE,
+        REGISTRATION_CLOSES,
         DISABLED_AFTER_APPLICATIONS_CLOSE
     }
 }`;
@@ -322,21 +323,26 @@ class UserManager extends Component {
                                      toggleBetween={
                                          !this.props.CONSTANTS.loading ?
                                              new Date() > new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)) ?
-                                                 <span>
-                                                     Registration is now closed.
-                                                 </span>
+                                                 new Date() > new Date(parseInt(this.props.CONSTANTS.CONSTANTS.REGISTRATION_CLOSES, 10)) ?
+                                                     <span>
+                                                         Registration is now closed.
+                                                     </span>
+                                                     :
+                                                     <span>Registration is now closed to non-Menlo students.
+                                                         <Button onClick={() => this.setUserState("register")}>Menlo Student Registration</Button>
+                                                     </span>
                                                  :
                                                  <span>Don't have an account?
                                                     <Button onClick={() => this.setUserState("register")}>Register</Button>
                                                  </span>
-                                                 :
+                                             :
                                              <span>Don't have an account?
                                                 <Button  onClick={() => this.setUserState("register")}>Register</Button>
                                              </span>
                                      }
                     />
                     <RegisterOrLogin
-                        title={'Register'}
+                        title='Register'
                         registerOrLogin={this.registerWithPurge}
                         show={this.state.userState === "register"}
                         setUserState={this.setUserState}
@@ -373,8 +379,7 @@ class UserManager extends Component {
         } else if (this.state.userState === "profile" || this.state.userState === "bgc_application" ||
             this.state.userState === "menlo_application" || this.state.userState === "application") {
             let applicationsClosed = !this.props.CONSTANTS.loading ?
-                    new Date() > new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10
-                )):
+                    new Date() > new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)):
                     false;
             return (
                 <div>
