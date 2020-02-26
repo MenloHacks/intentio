@@ -159,8 +159,8 @@ class Application extends Component {
                                 is_non_menlo && !this.props.CONSTANTS.loading ?
                                     <div>
                                         <p style={{marginLeft: "8px", marginBottom: "0px"}}>
-                                            Applications will close the midnight
-                                            before {new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).toDateString()}.
+                                            Applications will close at 11:59:59pm
+                                            on {new Date(new Date().setDate(new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).getDate() - 1)).toDateString()}.
                                             Please fill out all required information before then.
                                         </p>
                                     </div>
