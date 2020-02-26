@@ -160,7 +160,7 @@ class Application extends Component {
                                     <div>
                                         <p style={{marginLeft: "8px", marginBottom: "0px"}}>
                                             Applications will close at 11:59:59pm
-                                            on {new Date(new Date().setDate(new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).getDate() - 1)).toDateString()}.
+                                            on {new Date(new Date().setDate(new Date(parseInt(this.props.CONSTANTS.CONSTANTS.APPLICATIONS_CLOSE, 10)).getDate() + 28)).toDateString()}.
                                             Please fill out all required information before then.
                                         </p>
                                     </div>
