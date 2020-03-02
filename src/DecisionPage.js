@@ -197,7 +197,7 @@ class DecisionPage extends Component {
                                                         <p>
                                                             We regret to inform you that, due to an extremely competitive
                                                             applicant pool, we are not able to offer you a spot at
-                                                            MenloHacks IV. We urge you to apply again next year.
+                                                            MenloHacks V. We urge you to apply again next year.
                                                         </p>
                                                     </div> :
                                                     <div>
